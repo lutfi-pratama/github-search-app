@@ -1,10 +1,9 @@
 part of './index.dart';
 
 class MenuWidget extends StatefulWidget {
-  MenuWidget({Key? key, this.menuItemCubit, this.number}) : super(key: key);
+  final int? number;
 
-  MenuItemCubit? menuItemCubit;
-  int? number;
+  const MenuWidget({super.key, this.number});
 
   @override
   State<MenuWidget> createState() => _MenuWidgetState();
@@ -59,8 +58,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                     onTap: () {
                       KeyboardBehaviour.keyboardDisappear(context);
                       loadDataCubit.onChangeType(LoadDataCubitType.users);
-                      widget.menuItemCubit
-                          ?.updateSelectedMenuItem(state.menus[0]);
+                      menuItemCubit.updateSelectedMenuItem(state.menus[0]);
                     },
                   ),
                   SizedBox(
@@ -89,8 +87,8 @@ class _MenuWidgetState extends State<MenuWidget> {
                               KeyboardBehaviour.keyboardDisappear(context);
                               loadDataCubit
                                   .onChangeType(LoadDataCubitType.repos);
-                              widget.menuItemCubit
-                                  ?.updateSelectedMenuItem(state.menus[1]);
+                              menuItemCubit
+                                  .updateSelectedMenuItem(state.menus[1]);
                             }),
                         SizedBox(
                           height: 15.w,
@@ -115,8 +113,8 @@ class _MenuWidgetState extends State<MenuWidget> {
                               KeyboardBehaviour.keyboardDisappear(context);
                               loadDataCubit
                                   .onChangeType(LoadDataCubitType.issues);
-                              widget.menuItemCubit
-                                  ?.updateSelectedMenuItem(state.menus[2]);
+                              menuItemCubit
+                                  .updateSelectedMenuItem(state.menus[2]);
                             }),
                       ],
                     ),

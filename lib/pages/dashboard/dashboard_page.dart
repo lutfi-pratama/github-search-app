@@ -10,8 +10,6 @@ class Dashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    MenuItemCubit menuItemCubit = context.read<MenuItemCubit>();
-
     return Scaffold(
       body: Stack(
         alignment: Alignment.bottomLeft,
@@ -52,7 +50,7 @@ class Dashboard extends StatelessWidget {
           Positioned(
             bottom: 238.w,
             left: 21.w,
-            child: MenuWidget(menuItemCubit: menuItemCubit),
+            child: MenuWidget(),
           ),
           // search box
           Positioned(bottom: 80.w, left: 21.w, child: const SearchBar())

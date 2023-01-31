@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:github_search_app/cubits/load_data/load_data_cubit.dart';
@@ -11,15 +9,16 @@ import '../../cubits/menu_item/menu_item_cubit.dart';
 import "./widgets/index.dart";
 
 class ContentsBrowsePage extends StatelessWidget {
+  const ContentsBrowsePage({super.key});
+
   @override
   Widget build(BuildContext context) {
-    final LoadDataCubit loadDataCubit = BlocProvider.of<LoadDataCubit>(context);
+    final LoadDataCubit loadDataCubit = context.read<LoadDataCubit>();
     // final MenuItemCubit menuItemCubit = BlocProvider.of<MenuItemCubit>(context);
     final MenuItemCubit watchMenuItemCubit = context.watch<MenuItemCubit>();
     bool isIndexView = watchMenuItemCubit.state.isIndexViewData;
 
     return BlocBuilder<LoadDataCubit, LoadDataState>(
-      bloc: loadDataCubit,
       builder: (context, state) {
         int currentPageIndex = state.type == LoadDataCubitType.users
             ? state.paramsGetUsers.page
@@ -45,7 +44,7 @@ class ContentsBrowsePage extends StatelessWidget {
                   pinned: true,
                   leading: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        primary: MyColors.darkPurple,
+                        backgroundColor: MyColors.darkPurple,
                         shape: RoundedRectangleBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(100.r))),
@@ -126,7 +125,7 @@ class ContentsBrowsePage extends StatelessWidget {
                                 //     watchMenuItemCubit.state.selectedItem.name);
                               },
                         style: ElevatedButton.styleFrom(
-                          primary: MyColors.darkPurple,
+                          backgroundColor: MyColors.darkPurple,
                           minimumSize: Size(10.w, 10.w),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.r)),
@@ -152,7 +151,7 @@ class ContentsBrowsePage extends StatelessWidget {
                                   watchMenuItemCubit.state.selectedItem.name);
                         },
                         style: ElevatedButton.styleFrom(
-                          primary: MyColors.darkPurple,
+                          backgroundColor: MyColors.darkPurple,
                           minimumSize: Size(10.w, 10.w),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.r)),
