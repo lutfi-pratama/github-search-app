@@ -11,6 +11,7 @@ class LoadDataRepositoryExe implements LoadDataRepository {
         path: path.toLowerCase(),
         method: HttpMethod.get,
         queryParameters: params.toMap());
+
     if (response.data != null) {
       final res = response.data;
       return res!;

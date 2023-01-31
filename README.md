@@ -1,6 +1,25 @@
 # github_search_app
 
-A new Flutter project.
+<br />
+<div align="center">
+  <!-- PROJECT LOGO -->
+  <h1 align="center"><b>Github Search App</b></h1>
+  <p align="center"><b>Simple app project using Github API</b></p>
+  <p align="center">Elegant design. Wellness. Maintainable.</p>
+</div>
+
+## ✨ Features
+
+- [x] Search by index, name, and repo
+- [ ] ...
+
+## 🔌 Technical Implementation
+
+- [x] Flutter Clean Architecture.
+- [x] BLoC (Business Logic Component) design pattern.
+- [x] Service Locator | use Get_it package.
+- [x] API Interceptors | Dio configuration.
+- [ ] ...
 
 ## Getting Started
 
