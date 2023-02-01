@@ -46,39 +46,38 @@ class MenuItemSliverDelegate extends SliverPersistentHeaderDelegate {
                       MenuItemShowIndex(
                           icon: Icons.person_outline,
                           isSelected:
-                              state.menus[0].id == state.selectedItem.id,
+                              state.menus[0].id == state.selectedMenu.id,
                           callback: () {
                             KeyboardBehaviour.keyboardDisappear(context);
-                            loadDataCubit.onChangeType(LoadDataCubitType.users);
+                            loadDataCubit.onChangeType(LoadDataType.users);
                             menuItemCubit
                                 .updateSelectedMenuItem(state.menus[0]);
                             loadDataCubit.onLoadDataList(
-                                selectedMenuItemName: state.selectedItem.name);
+                                selectedMenuItemName: state.selectedMenu.name);
                           }),
                       MenuItemShowIndex(
                           icon: Icons.file_copy_outlined,
                           isSelected:
-                              state.menus[1].id == state.selectedItem.id,
+                              state.menus[1].id == state.selectedMenu.id,
                           callback: () {
                             KeyboardBehaviour.keyboardDisappear(context);
-                            loadDataCubit.onChangeType(LoadDataCubitType.repos);
+                            loadDataCubit.onChangeType(LoadDataType.repos);
                             menuItemCubit
                                 .updateSelectedMenuItem(state.menus[1]);
                             loadDataCubit.onLoadDataList(
-                                selectedMenuItemName: state.selectedItem.name);
+                                selectedMenuItemName: state.selectedMenu.name);
                           }),
                       MenuItemShowIndex(
                           icon: Icons.laptop_chromebook_outlined,
                           isSelected:
-                              state.menus[2].id == state.selectedItem.id,
+                              state.menus[2].id == state.selectedMenu.id,
                           callback: () {
                             KeyboardBehaviour.keyboardDisappear(context);
-                            loadDataCubit
-                                .onChangeType(LoadDataCubitType.issues);
+                            loadDataCubit.onChangeType(LoadDataType.issues);
                             menuItemCubit
                                 .updateSelectedMenuItem(state.menus[2]);
                             loadDataCubit.onLoadDataList(
-                                selectedMenuItemName: state.selectedItem.name);
+                                selectedMenuItemName: state.selectedMenu.name);
                           }),
                     ],
                   );

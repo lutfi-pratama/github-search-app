@@ -29,10 +29,13 @@ class _MenuWidgetState extends State<MenuWidget> {
         children: [
           BlocBuilder<MenuItemCubit, MenuItemState>(
             builder: (_, state) {
-              bool isSelectedUsers = state.selectedItem.id == state.menus[0].id;
-              bool isSelectedRepos = state.selectedItem.id == state.menus[1].id;
-              bool isSelectedIssues =
-                  state.selectedItem.id == state.menus[2].id;
+              bool isMenuUsersActive =
+                  state.selectedMenu.id == state.menus[0].id;
+              bool isMenuReposActive =
+                  state.selectedMenu.id == state.menus[1].id;
+              bool isMenuIssuesActive =
+                  state.selectedMenu.id == state.menus[2].id;
+
               return Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -41,23 +44,23 @@ class _MenuWidgetState extends State<MenuWidget> {
                       duration: const Duration(
                           milliseconds:
                               StringConstant.durationAnimatedContainer),
-                      height: isSelectedUsers ? 300.w : 290.w,
-                      width: isSelectedUsers ? 140.w : 134.w,
+                      height: isMenuUsersActive ? 300.w : 290.w,
+                      width: isMenuUsersActive ? 140.w : 134.w,
                       decoration: BoxDecoration(
                           gradient: LinearGradient(
-                              colors:
-                                  MyColors.redOrangeGradient(isSelectedUsers)),
+                              colors: MyColors.redOrangeGradient(
+                                  isMenuUsersActive)),
                           borderRadius:
                               BorderRadius.all(Radius.circular(15.r))),
                       child: MenuContentWidget(
                         text: state.menus[0].name,
                         icon: Icons.person_outline,
-                        isSelected: isSelectedUsers,
+                        isSelected: isMenuUsersActive,
                       ),
                     ),
                     onTap: () {
                       KeyboardBehaviour.keyboardDisappear(context);
-                      loadDataCubit.onChangeType(LoadDataCubitType.users);
+                      loadDataCubit.onChangeType(LoadDataType.users);
                       menuItemCubit.updateSelectedMenuItem(state.menus[0]);
                     },
                   ),
@@ -69,24 +72,23 @@ class _MenuWidgetState extends State<MenuWidget> {
                       children: [
                         GestureDetector(
                             child: Container(
-                              width: isSelectedRepos ? 240.w : 1.sh,
-                              height: isSelectedRepos ? 176.w : 166.w,
+                              width: isMenuReposActive ? 240.w : 1.sh,
+                              height: isMenuReposActive ? 176.w : 166.w,
                               decoration: BoxDecoration(
                                   gradient: LinearGradient(
                                       colors: MyColors.redOrangeGradient(
-                                          isSelectedRepos)),
+                                          isMenuReposActive)),
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(15.r))),
                               child: MenuContentWidget(
                                 text: state.menus[1].name,
                                 icon: Icons.file_copy_outlined,
-                                isSelected: isSelectedRepos,
+                                isSelected: isMenuReposActive,
                               ),
                             ),
                             onTap: () {
                               KeyboardBehaviour.keyboardDisappear(context);
-                              loadDataCubit
-                                  .onChangeType(LoadDataCubitType.repos);
+                              loadDataCubit.onChangeType(LoadDataType.repos);
                               menuItemCubit
                                   .updateSelectedMenuItem(state.menus[1]);
                             }),
@@ -95,24 +97,23 @@ class _MenuWidgetState extends State<MenuWidget> {
                         ),
                         GestureDetector(
                             child: Container(
-                              height: isSelectedIssues ? 120.w : 110.w,
-                              width: isSelectedIssues ? 240.w : 1.sh,
+                              height: isMenuIssuesActive ? 120.w : 110.w,
+                              width: isMenuIssuesActive ? 240.w : 1.sh,
                               decoration: BoxDecoration(
                                   gradient: LinearGradient(
                                       colors: MyColors.redOrangeGradient(
-                                          isSelectedIssues)),
+                                          isMenuIssuesActive)),
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(15.r))),
                               child: MenuContentWidget(
                                 text: state.menus[2].name,
                                 icon: Icons.laptop_chromebook_outlined,
-                                isSelected: isSelectedIssues,
+                                isSelected: isMenuIssuesActive,
                               ),
                             ),
                             onTap: () {
                               KeyboardBehaviour.keyboardDisappear(context);
-                              loadDataCubit
-                                  .onChangeType(LoadDataCubitType.issues);
+                              loadDataCubit.onChangeType(LoadDataType.issues);
                               menuItemCubit
                                   .updateSelectedMenuItem(state.menus[2]);
                             }),

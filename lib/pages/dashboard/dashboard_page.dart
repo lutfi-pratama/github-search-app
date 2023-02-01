@@ -50,7 +50,7 @@ class Dashboard extends StatelessWidget {
           Positioned(
             bottom: 238.w,
             left: 21.w,
-            child: MenuWidget(),
+            child: const MenuWidget(),
           ),
           // search box
           Positioned(bottom: 80.w, left: 21.w, child: const SearchBar())

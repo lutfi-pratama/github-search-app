@@ -11,8 +11,8 @@ part './load_data_state.dart';
 class LoadDataCubit extends Cubit<LoadDataState> {
   LoadDataCubit({required this.repository})
       : super(LoadDataState(
-          loadDataShow: ShowData.init(),
-          type: LoadDataCubitType.users,
+          loadDataStatus: DataStatus.init(),
+          type: LoadDataType.users,
           paramsGetUsers: const ParamLoadDataMdl(
             page: 1,
             limit: 2,
@@ -39,7 +39,7 @@ class LoadDataCubit extends Cubit<LoadDataState> {
 
   Future<void> onLoadDataList({String selectedMenuItemName = ''}) async {
     emit(state.copyWith(
-      loadDataShow: ShowData.loading(),
+      loadDataStatus: DataStatus.loading(),
       paramsGetUsers:
           state.paramsGetUsers.copyWith(search: state.textFieldValue),
       paramsGetRepositories:
@@ -54,29 +54,30 @@ class LoadDataCubit extends Cubit<LoadDataState> {
 
       final res = await repository.loadData(params: params, path: networkPath);
 
-      if (state.type == LoadDataCubitType.users) {
+      if (state.type == LoadDataType.users) {
         _setResponseDataUsers(res);
-      } else if (state.type == LoadDataCubitType.repos) {
+      } else if (state.type == LoadDataType.repos) {
         _setResponseDataRepositories(res);
-      } else if (state.type == LoadDataCubitType.issues) {
+      } else if (state.type == LoadDataType.issues) {
         _setResponseDataIssues(res);
       }
     } on DioError catch (e) {
-      emit(state.copyWith(loadDataShow: ShowData.error(message: e.message)));
+      emit(
+          state.copyWith(loadDataStatus: DataStatus.error(message: e.message)));
     } catch (e) {
-      emit(state.copyWith(loadDataShow: ShowData.error(message: '$e')));
+      emit(state.copyWith(loadDataStatus: DataStatus.error(message: '$e')));
     } finally {
-      emit(state.copyWith(loadDataShow: ShowData.init()));
+      emit(state.copyWith(loadDataStatus: DataStatus.init()));
     }
   }
 
   ParamLoadDataMdl _getNetworkParams() {
     ParamLoadDataMdl params = const ParamLoadDataMdl();
-    if (state.type == LoadDataCubitType.users) {
+    if (state.type == LoadDataType.users) {
       params = state.paramsGetUsers;
-    } else if (state.type == LoadDataCubitType.repos) {
+    } else if (state.type == LoadDataType.repos) {
       params = state.paramsGetRepositories;
-    } else if (state.type == LoadDataCubitType.issues) {
+    } else if (state.type == LoadDataType.issues) {
       params = state.paramsGetIssues;
     }
     return params;
@@ -84,11 +85,11 @@ class LoadDataCubit extends Cubit<LoadDataState> {
 
   String _getNetworkPath(String menuItemName) {
     String networkPath = '';
-    if (state.type == LoadDataCubitType.users) {
+    if (state.type == LoadDataType.users) {
       networkPath = 'users';
-    } else if (state.type == LoadDataCubitType.repos) {
+    } else if (state.type == LoadDataType.repos) {
       networkPath = 'repositories';
-    } else if (state.type == LoadDataCubitType.issues) {
+    } else if (state.type == LoadDataType.issues) {
       networkPath = 'issues';
     }
     return networkPath;
@@ -103,7 +104,7 @@ class LoadDataCubit extends Cubit<LoadDataState> {
     final updatedUserslist = _getAppendedCurrentUsersWithNewUsers(usersList);
 
     emit(state.copyWith(
-      loadDataShow: ShowData.hasData(),
+      loadDataStatus: DataStatus.success(),
       listUsers: updatedUserslist,
       listUsersIndexed: usersList,
     ));
@@ -119,7 +120,7 @@ class LoadDataCubit extends Cubit<LoadDataState> {
         _getAppendedCurrentReposWithNewRepos(repositoriesList);
 
     emit(state.copyWith(
-      loadDataShow: ShowData.hasData(),
+      loadDataStatus: DataStatus.success(),
       listRepositories: updatedRepositorieslist,
       listRepositoriesIndexed: repositoriesList,
     ));
@@ -137,7 +138,7 @@ class LoadDataCubit extends Cubit<LoadDataState> {
         _getAppendedCurrentIssuesWithNewIssues(issuesList);
 
     emit(state.copyWith(
-      loadDataShow: ShowData.hasData(),
+      loadDataStatus: DataStatus.success(),
       listIssues: updatedIssueslist,
       listIssuesIndexed: issuesList,
     ));
@@ -189,16 +190,16 @@ class LoadDataCubit extends Cubit<LoadDataState> {
   void onNextPage() {
     if (!isAbleToNextPage) return;
 
-    if (state.type == LoadDataCubitType.users) {
+    if (state.type == LoadDataType.users) {
       int nextPage = state.paramsGetUsers.page + 1;
       emit(state.copyWith(
           paramsGetUsers: state.paramsGetUsers.copyWith(page: nextPage)));
-    } else if (state.type == LoadDataCubitType.repos) {
+    } else if (state.type == LoadDataType.repos) {
       int nextPage = state.paramsGetRepositories.page + 1;
       emit(state.copyWith(
           paramsGetRepositories:
               state.paramsGetRepositories.copyWith(page: nextPage)));
-    } else if (state.type == LoadDataCubitType.issues) {
+    } else if (state.type == LoadDataType.issues) {
       int nextPage = state.paramsGetIssues.page + 1;
       emit(state.copyWith(
           paramsGetIssues: state.paramsGetIssues.copyWith(page: nextPage)));
@@ -208,18 +209,17 @@ class LoadDataCubit extends Cubit<LoadDataState> {
   }
 
   void onBackPage() {
-    if (state.type == LoadDataCubitType.users &&
-        state.paramsGetUsers.page > 1) {
+    if (state.type == LoadDataType.users && state.paramsGetUsers.page > 1) {
       int priorPage = state.paramsGetUsers.page - 1;
       emit(state.copyWith(
           paramsGetUsers: state.paramsGetUsers.copyWith(page: priorPage)));
-    } else if (state.type == LoadDataCubitType.repos &&
+    } else if (state.type == LoadDataType.repos &&
         state.paramsGetRepositories.page > 1) {
       int priorPage = state.paramsGetRepositories.page - 1;
       emit(state.copyWith(
           paramsGetRepositories:
               state.paramsGetRepositories.copyWith(page: priorPage)));
-    } else if (state.type == LoadDataCubitType.issues &&
+    } else if (state.type == LoadDataType.issues &&
         state.paramsGetIssues.page > 1) {
       int priorPage = state.paramsGetIssues.page - 1;
       emit(state.copyWith(
@@ -229,16 +229,16 @@ class LoadDataCubit extends Cubit<LoadDataState> {
     _onChangeActivePage();
   }
 
-  void onChangeType(LoadDataCubitType typePick) {
+  void onChangeType(LoadDataType typePick) {
     emit(state.copyWith(type: typePick));
 
     _onChangeActivePage();
   }
 
   int getCurrentIndexedForPageView() {
-    if (state.type == LoadDataCubitType.users) {
+    if (state.type == LoadDataType.users) {
       return state.paramsGetUsers.page;
-    } else if (state.type == LoadDataCubitType.repos) {
+    } else if (state.type == LoadDataType.repos) {
       return state.paramsGetRepositories.page;
     }
     return state.paramsGetIssues.page;
@@ -257,11 +257,11 @@ class LoadDataCubit extends Cubit<LoadDataState> {
   }
 
   void _onChangeActivePage() {
-    if (state.type == LoadDataCubitType.users) {
+    if (state.type == LoadDataType.users) {
       emit(state.copyWith(activePage: state.paramsGetUsers.page));
-    } else if (state.type == LoadDataCubitType.repos) {
+    } else if (state.type == LoadDataType.repos) {
       emit(state.copyWith(activePage: state.paramsGetRepositories.page));
-    } else if (state.type == LoadDataCubitType.issues) {
+    } else if (state.type == LoadDataType.issues) {
       emit(state.copyWith(activePage: state.paramsGetIssues.page));
     }
   }
@@ -285,4 +285,4 @@ class LoadDataCubit extends Cubit<LoadDataState> {
   }
 }
 
-enum LoadDataCubitType { users, repos, issues }
+enum LoadDataType { users, repos, issues }

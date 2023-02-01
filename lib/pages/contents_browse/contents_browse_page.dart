@@ -14,17 +14,17 @@ class ContentsBrowsePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final LoadDataCubit loadDataCubit = context.read<LoadDataCubit>();
-    // final MenuItemCubit menuItemCubit = BlocProvider.of<MenuItemCubit>(context);
     final MenuItemCubit watchMenuItemCubit = context.watch<MenuItemCubit>();
     bool isIndexView = watchMenuItemCubit.state.isIndexViewData;
 
     return BlocBuilder<LoadDataCubit, LoadDataState>(
       builder: (context, state) {
-        int currentPageIndex = state.type == LoadDataCubitType.users
+        int currentPageIndex = state.type == LoadDataType.users
             ? state.paramsGetUsers.page
-            : state.type == LoadDataCubitType.repos
+            : state.type == LoadDataType.repos
                 ? state.paramsGetRepositories.page
                 : state.paramsGetIssues.page;
+
         return Scaffold(
           backgroundColor: MyColors.cream10Color,
           body: NestedScrollView(
@@ -77,7 +77,7 @@ class ContentsBrowsePage extends StatelessWidget {
                   loadDataCubit.onNextPage();
                   loadDataCubit.onLoadDataList(
                       selectedMenuItemName:
-                          watchMenuItemCubit.state.selectedItem.name);
+                          watchMenuItemCubit.state.selectedMenu.name);
                 }
               },
               child: RefreshIndicator(
@@ -85,7 +85,7 @@ class ContentsBrowsePage extends StatelessWidget {
                 color: MyColors.darkPurple,
                 onRefresh: () async => loadDataCubit.onLoadDataList(
                     selectedMenuItemName:
-                        watchMenuItemCubit.state.selectedItem.name),
+                        watchMenuItemCubit.state.selectedMenu.name),
                 child: Column(
                   children: [
                     Expanded(
@@ -95,7 +95,7 @@ class ContentsBrowsePage extends StatelessWidget {
                         isIndexView: isIndexView,
                       ),
                     ),
-                    if (state.loadDataShow.isLoading) ...[
+                    if (state.loadDataStatus.isLoading) ...[
                       SpinKitDoubleBounce(color: MyColors.red10Color),
                       SizedBox(
                         height: 10.w,
@@ -120,7 +120,7 @@ class ContentsBrowsePage extends StatelessWidget {
                                 loadDataCubit.onBackPage();
                                 loadDataCubit.onLoadDataList(
                                     selectedMenuItemName: watchMenuItemCubit
-                                        .state.selectedItem.name);
+                                        .state.selectedMenu.name);
                                 // loadDataCubit.considerLoadDataOnBackIndex(
                                 //     watchMenuItemCubit.state.selectedItem.name);
                               },
@@ -148,7 +148,7 @@ class ContentsBrowsePage extends StatelessWidget {
                           loadDataCubit.onNextPage();
                           loadDataCubit.onLoadDataList(
                               selectedMenuItemName:
-                                  watchMenuItemCubit.state.selectedItem.name);
+                                  watchMenuItemCubit.state.selectedMenu.name);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: MyColors.darkPurple,

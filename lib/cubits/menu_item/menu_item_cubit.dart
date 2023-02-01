@@ -7,14 +7,14 @@ part './menu_item_state.dart';
 class MenuItemCubit extends Cubit<MenuItemState> {
   MenuItemCubit()
       : super(const MenuItemState(
-            selectedItem: MenuItemMdl(), isIndexViewData: false));
+            selectedMenu: MenuItemMdl(), isIndexViewData: false));
 
   void getMenuItem(List<MenuItemMdl> menus) {
     emit(state.copyWith(menus: menus));
   }
 
   MenuItemMdl getSelectedMenuItem() {
-    return state.selectedItem;
+    return state.selectedMenu;
   }
 
   void updateSelectedMenuItem(MenuItemMdl selectedMenuModul) {

@@ -1,7 +1,7 @@
 part of './load_data_cubit.dart';
 
 class LoadDataState extends Equatable {
-  final ShowData loadDataShow;
+  final DataStatus loadDataStatus;
   final int activePage;
   final List<UserMdl> listUsers;
   final List<UserMdl> listUsersIndexed;
@@ -13,10 +13,10 @@ class LoadDataState extends Equatable {
   final ParamLoadDataMdl paramsGetRepositories;
   final ParamLoadDataMdl paramsGetIssues;
   final String textFieldValue;
-  final LoadDataCubitType type;
+  final LoadDataType type;
 
   const LoadDataState({
-    required this.loadDataShow,
+    required this.loadDataStatus,
     this.activePage = 1,
     this.listUsers = const [],
     this.listUsersIndexed = const [],
@@ -32,7 +32,7 @@ class LoadDataState extends Equatable {
   });
 
   LoadDataState copyWith({
-    ShowData? loadDataShow,
+    DataStatus? loadDataStatus,
     int? activePage,
     List<UserMdl>? listUsers,
     List<UserMdl>? listUsersIndexed,
@@ -44,10 +44,10 @@ class LoadDataState extends Equatable {
     ParamLoadDataMdl? paramsGetRepositories,
     ParamLoadDataMdl? paramsGetIssues,
     String? textFieldValue,
-    LoadDataCubitType? type,
+    LoadDataType? type,
   }) {
     return LoadDataState(
-      loadDataShow: loadDataShow ?? this.loadDataShow,
+      loadDataStatus: loadDataStatus ?? this.loadDataStatus,
       activePage: activePage ?? this.activePage,
       listUsers: listUsers ?? this.listUsers,
       listUsersIndexed: listUsersIndexed ?? this.listUsersIndexed,
@@ -67,7 +67,7 @@ class LoadDataState extends Equatable {
 
   @override
   List<Object> get props => [
-        loadDataShow,
+        loadDataStatus,
         listUsers,
         textFieldValue,
         type,

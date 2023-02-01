@@ -60,7 +60,7 @@ class _SearchBarState extends State<SearchBar> {
                     onPressed: (() {
                       loadDataCubit.onTextFieldChange(_controller.text);
                       loadDataCubit.onLoadDataList(
-                        selectedMenuItemName: state.selectedItem.name,
+                        selectedMenuItemName: state.selectedMenu.name,
                       );
 
                       Navigator.push(

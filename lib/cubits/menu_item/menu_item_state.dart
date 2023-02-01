@@ -1,12 +1,12 @@
 part of './menu_item_cubit.dart';
 
 class MenuItemState extends Equatable {
-  final MenuItemMdl selectedItem;
+  final MenuItemMdl selectedMenu;
   final List<MenuItemMdl> menus;
   final bool isIndexViewData;
 
   const MenuItemState({
-    required this.selectedItem,
+    required this.selectedMenu,
     this.menus = const [],
     this.isIndexViewData = false,
   });
@@ -17,12 +17,12 @@ class MenuItemState extends Equatable {
     bool? isIndexViewData,
   }) {
     return MenuItemState(
-      selectedItem: selectedItem ?? this.selectedItem,
+      selectedMenu: selectedItem ?? this.selectedMenu,
       menus: menus ?? this.menus,
       isIndexViewData: isIndexViewData ?? this.isIndexViewData,
     );
   }
 
   @override
-  List<Object> get props => [selectedItem, menus, isIndexViewData];
+  List<Object> get props => [selectedMenu, menus, isIndexViewData];
 }

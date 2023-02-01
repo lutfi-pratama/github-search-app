@@ -20,13 +20,6 @@ class _MyAppState extends State<MyApp> {
   final MenuItemCubit _menuItemCubit = MenuItemCubit();
 
   @override
-  void dispose() {
-    _loadDataCubit.close();
-    _menuItemCubit.close();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
         designSize: const Size(360, 800),

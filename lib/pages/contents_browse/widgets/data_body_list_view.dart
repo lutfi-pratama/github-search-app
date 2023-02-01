@@ -12,20 +12,20 @@ class DataBodyListView extends StatelessWidget {
       : super(key: key);
 
   bool isIndexView;
-  LoadDataCubitType type;
+  LoadDataType type;
   LoadDataState loadDataState;
 
   @override
   Widget build(BuildContext context) {
-    final lengthDataList = type == LoadDataCubitType.users
+    final lengthDataList = type == LoadDataType.users
         ? loadDataState.listUsers.length
-        : type == LoadDataCubitType.repos
+        : type == LoadDataType.repos
             ? loadDataState.listRepositories.length
             : loadDataState.listIssues.length;
 
-    final lengthDataListIndexed = type == LoadDataCubitType.users
+    final lengthDataListIndexed = type == LoadDataType.users
         ? loadDataState.listUsersIndexed.length
-        : type == LoadDataCubitType.repos
+        : type == LoadDataType.repos
             ? loadDataState.listRepositoriesIndexed.length
             : loadDataState.listIssuesIndexed.length;
 
@@ -36,19 +36,19 @@ class DataBodyListView extends StatelessWidget {
             ),
         itemCount: !isIndexView ? lengthDataList : lengthDataListIndexed,
         itemBuilder: (_, index) {
-          if (type == LoadDataCubitType.users) {
+          if (type == LoadDataType.users) {
             return ProfileCard(
               user: !isIndexView
                   ? loadDataState.listUsers[index]
                   : loadDataState.listUsersIndexed[index],
             );
-          } else if (type == LoadDataCubitType.repos) {
+          } else if (type == LoadDataType.repos) {
             return RepositoryCard(
               repository: !isIndexView
                   ? loadDataState.listRepositories[index]
                   : loadDataState.listRepositoriesIndexed[index],
             );
-          } else if (type == LoadDataCubitType.issues) {
+          } else if (type == LoadDataType.issues) {
             return IssueCard(
               issue: !isIndexView
                   ? loadDataState.listIssues[index]
